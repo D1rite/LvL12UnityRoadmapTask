@@ -15,10 +15,10 @@ public class SaveData : MonoBehaviour {
         if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles")))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles");
-            if(!Directory.Exists((Application.persistentDataPath + "/SaveFiles/Data")))
-            {
-                Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles/Data");
-            }
+        }
+        if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles/Data")))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles/Data");
         }
 
         string customName = CaptureScreenshot.scName = GenerateNameForSS();

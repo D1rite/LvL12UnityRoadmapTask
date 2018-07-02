@@ -11,7 +11,7 @@ public class LoadScrollViewFiller : MonoBehaviour
     public GameObject button;
     public void FillUpScrollView()
     {
-        if (!Directory.Exists(Application.persistentDataPath + "/SaveFiles"))
+        if (!Directory.Exists(Application.persistentDataPath + "/SaveFiles/Data"))
         {
             return;
         }
@@ -19,6 +19,7 @@ public class LoadScrollViewFiller : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
+       
         DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath + "/SaveFiles/Data");
         FileInfo[] info = dir.GetFiles();
         foreach (FileInfo currentFile in info)

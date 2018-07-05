@@ -6,9 +6,6 @@ public class ObjController : MonoBehaviour
 {
     public static List<GameObject> selectedObjList = new List<GameObject>();
     public static List<GameObject> allObjList = new List<GameObject>();
-    ChangeColor cc = new ChangeColor();
-    ChangeLocation cl = new ChangeLocation();
-    ChangeSize cs = new ChangeSize();
     // Use this for initialization
     void Start()
     {
@@ -20,30 +17,54 @@ public class ObjController : MonoBehaviour
     {
         //Input for changing color
         if (Input.GetKeyDown(KeyCode.R))
-            cc.ChangeSelectedObjColor(Color.red);
+            ChangeSelectedObjColor(Color.red);
         if (Input.GetKeyDown(KeyCode.G))
-            cc.ChangeSelectedObjColor(Color.green);
+            ChangeSelectedObjColor(Color.green);
         if (Input.GetKeyDown(KeyCode.B))
-            cc.ChangeSelectedObjColor(Color.blue);
+            ChangeSelectedObjColor(Color.blue);
 
         //Input for Scaling
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            cs.ChangeSelectedObjSize(new Vector3(0.1f, 0, 0.1f));
+            ChangeSelectedObjSize(new Vector3(0.1f, 0, 0.1f));
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            cs.ChangeSelectedObjSize(new Vector3(0, 0.1f, 0));
+            ChangeSelectedObjSize(new Vector3(0, 0.1f, 0));
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            cs.ChangeSelectedObjSize(new Vector3(-0.1f, 0, -0.1f));
+            ChangeSelectedObjSize(new Vector3(-0.1f, 0, -0.1f));
         if (Input.GetKeyDown(KeyCode.DownArrow))
-            cs.ChangeSelectedObjSize(new Vector3(0, -0.1f, 0));
+            ChangeSelectedObjSize(new Vector3(0, -0.1f, 0));
 
         //Input for changing position
         if (Input.GetKey(KeyCode.W))
-            cl.ChangeSelectedObjLocation(new Vector3(50, 0, 0));
+            ChangeSelectedObjLocation(new Vector3(50, 0, 0));
         if (Input.GetKey(KeyCode.S))
-            cl.ChangeSelectedObjLocation(new Vector3(-50, 0, 0));
+            ChangeSelectedObjLocation(new Vector3(-50, 0, 0));
         if (Input.GetKey(KeyCode.D))
-            cl.ChangeSelectedObjLocation(new Vector3(0, 0, -50));
+            ChangeSelectedObjLocation(new Vector3(0, 0, -50));
         if (Input.GetKey(KeyCode.A))
-            cl.ChangeSelectedObjLocation(new Vector3(0, 0, 50));
+            ChangeSelectedObjLocation(new Vector3(0, 0, 50));
+    }
+
+    public void ChangeSelectedObjSize(Vector3 size)
+    {
+        foreach (GameObject item in ObjController.selectedObjList)
+        {
+            item.gameObject.transform.localScale += size;
+        }
+    }
+
+    public void ChangeSelectedObjLocation(Vector3 force)
+    {
+        foreach (GameObject item in ObjController.selectedObjList)
+        {
+            item.gameObject.GetComponent<Rigidbody>().AddForce(force);
+        }
+    }
+
+    public void ChangeSelectedObjColor(Color color)
+    {
+        foreach (GameObject item in ObjController.selectedObjList)
+        {
+            item.GetComponent<Renderer>().material.SetColor("_Color", color);
+        }
     }
 }

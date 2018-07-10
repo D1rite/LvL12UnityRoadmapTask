@@ -11,27 +11,37 @@ public class LoadScrollViewFiller : MonoBehaviour
     public GameObject button;
     public void FillUpScrollView()
     {
-        if (!Directory.Exists(Application.persistentDataPath + "/SaveFiles/Data"))
+        StartCoroutine(DoIt());
+    }
+
+    IEnumerator DoIt()
+       {
+        yield return new WaitForEndOfFrame();
+        if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles")))
         {
-            return;
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles");
+        }
+        if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles/Data")))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles/Data");
         }
         foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);
         }
-       
+
         DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath + "/SaveFiles/Data");
         FileInfo[] info = dir.GetFiles();
         foreach (FileInfo currentFile in info)
         {
             GameObject btn = Instantiate(button);
             string screenshotName = Path.GetFileNameWithoutExtension(Application.persistentDataPath + "/SaveFiles/ScreenShots" + currentFile);
-            StartCoroutine(load_image(screenshotName,btn));
+            StartCoroutine(load_image(screenshotName, btn));
         }
         Debug.Log(info.Length);
         if (info.Length > 2)
         {
-            gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0, -100 * (info.Length -2));
+            gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0, -100 * (info.Length - 2));
             gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
         }
         else
@@ -41,6 +51,7 @@ public class LoadScrollViewFiller : MonoBehaviour
         }
         Debug.Log(new Vector2(0, -100 * info.Length));
     }
+
 
     IEnumerator load_image( string ssName, GameObject btn)
     {

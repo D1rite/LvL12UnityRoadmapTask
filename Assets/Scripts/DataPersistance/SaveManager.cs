@@ -10,7 +10,6 @@ public class SaveManager : MonoBehaviour {
 	public void SaveGameData()
     {
         // Is no objects, then dont save the game.
-        Debug.Log(ObjController.allObjList.Count);
         if (ObjController.allObjList.Count == 0)
             return;
         if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles")))
@@ -55,12 +54,11 @@ public class SaveManager : MonoBehaviour {
         if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles")))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles");
-            if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles/Data")))
-            {
-                Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles/Data");
-            }
         }
-
+        if (!Directory.Exists((Application.persistentDataPath + "/SaveFiles/Data")))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveFiles/Data");
+        }
         File.Delete(Application.persistentDataPath + "/SaveFiles/Data/" + thisButton.name + ".dat");
         File.Delete(Application.persistentDataPath + "/SaveFiles/ScreenShots" + thisButton.name);
 
